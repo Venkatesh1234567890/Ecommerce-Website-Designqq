@@ -1,0 +1,170 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+Shopkart | Online Shopping
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-4 my-5" style="min-height: 600px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{products.name}} Details</h4>
+                <hr style="border-color:#b8bfc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'collection' %}">Collections</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{products.name}}</li>
+                    </ol>
+                </nav>
+                {% include 'shop/inc/message.html' %}  
+            </div>
+            <div class="ms-4" style="margin-left:100px;">
+                {% if products.trending %}
+                <div class="hot">Hot</div>
+                {% endif %}
+            </div>
+            <div class="col-6">
+                <img src="{{ products.product_image.url }}" style="width:300px; height:300;" class="card-img-top"
+                    alt="{{products.name}}">
+            </div>  
+                <div class="col-6" style="margin-top:70px;margin-left:-200px;" >
+                    <h5 class="text-success">{{products.name|upper}}</h5>
+                    <p>{{products.vendor}}</p>
+                    <p>{{products.description}}</p>
+                    <h6 class="my-2 text-danger">Current Price : Rs. <s>{{products.original_price}}</s></h6>
+                    <h6 class="my-2 text-danger">Offer Price : Rs. {{products.selling_price}}</h6>
+                    <div class="my-3">
+                        {% if products.quantity > 0 %}
+                        <input type="hidden" value="{{products.id}}" id="pid">
+                        
+                        <p>
+                            <div class="input-group" style="width:150px">
+                                <button class="input-group-text bg-success text-light" id="btnMinus"><i class="fa fa-minus"></i></button>
+                                <input type="text" name="qty" id="txtQty" value="1" class="form-control text-center">
+                                <button class="input-group-text bg-success text-light" id="btnPlus" ><i class="fa fa-plus"></i></button>
+                            </div>
+
+                            <form class="input-group">
+                                <input type="hidden" value="{{ }}" name="">
+                                <input type="hidden" value="{{ }}" name="">
+                                <input type="hidden" value="{{ }}" name="">
+                                <button type="submit" class="btn btn-primary" id="nh"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                            </form>
+                        </p>
+                       
+                       
+                        {% else %}
+                        <button class="btn btn-secondary"><i class="fa fa-minus"></i> Out of Stock</button>
+                        {% endif %}
+                        <button class="btn btn-danger" id="btnFav"><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+    const btnPlus = document.getElementById("btnPlus");
+    const btnMinus = document.getElementById("btnMinus");
+    const txtQty = document.getElementById("txtQty");
+    const pid = document.getElementById("pid");
+    const btnCart = document.getElementById("btnCart");
+    const btnFav = document.getElementById("btnFav");
+    
+    console.log(btnCart,"fdhjgjf")
+//     document.getElementById("btnPlus").onclick = function() {
+//     let qty = parseInt(txtQty.value, 10);
+//     qty = isNaN(qty) ? 0 : qty;
+
+//     if (qty < 10) {
+//         qty++;
+//         txtQty.value = qty;
+//     } else {
+//         alert("Maximum quantity is 10");
+//     }
+// };
+
+
+
+//     btnMinus.addEventListener("click", function() {
+//         let qty = parseInt(txtQty.value, 10);
+//         qty = isNaN(qty) ? 0 : qty;
+//         if (qty > 1) {
+//             qty--;
+//             txtQty.value = qty;
+//         }
+   });
+
+
+document.getElementById('btnPlus').addEventListener('click', function() {
+            var qtyInput = document.getElementById('txtQty');
+            var currentValue = parseInt(qtyInput.value);
+            qtyInput.value = currentValue + 1;
+        });
+
+        document.getElementById('btnMinus').addEventListener('click', function() {
+            var qtyInput = document.getElementById('txtQty');
+            var currentValue = parseInt(qtyInput.value);
+            if (currentValue > 1) {
+                qtyInput.value = currentValue - 1;
+            }
+        });
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const btnCart = document.getElementById('btnCart');
+    const txtQty = document.getElementById('txtQty');
+    const pid = document.getElementById('pid');
+
+    btnCart.onclick = function() {
+    let qty = parseInt(txtQty.value, 10);
+    qty = isNaN(qty) ? 0 : qty;
+
+    if (qty > 0) {
+        let postObj = {
+            'product_qty': qty,
+            'pid': pid.value
+        };
+        console.log(postObj)
+
+        fetch("/addtocart", {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify(postObj)
+        })
+        console.log(response)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data['status']);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error adding the product to the cart.');
+        });
+
+    } else {
+        alert("Please Enter the Quantity");
+    }
+};
+
+
+
+});
+</script>
+{% endblock content %}
+

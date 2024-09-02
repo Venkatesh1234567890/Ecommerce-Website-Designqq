@@ -1,0 +1,45 @@
+<!-- collections.html -->
+{% extends 'shop/layouts/main.html' %}
+{% block content %}
+<section class="py-5 text-center container" style="margin-top:70px;">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Products in {{ category.name }}</h1>
+            <p class="lead text-muted">Explore the products in this category.</p>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <hr style="border-color:#b8bfc2">
+                {% include 'shop/inc/message.html' %}  
+            </div>
+        </div>
+
+        <div class="row">
+            {% for item in categories %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card my-3">
+                    <img src="{{ item.image.url }}" style="height: 300px; width: 300px;" class="card-img-top" alt="{{ item.name }}">
+                    <a href="{% url 'collection_detail' cname=item.name %}">
+
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            {% empty %}
+            <div class="col-12">
+                <p>No products found in this category.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
