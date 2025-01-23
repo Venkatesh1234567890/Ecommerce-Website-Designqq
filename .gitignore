@@ -1,1 +1,64 @@
-"venv/" 
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+# Django-specific
+db.sqlite3
+*.log
+*.pot
+*.py[cod]
+*.sqlite3
+media/
+staticfiles/
+
+# Environment variables
+.env
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Docker
+*.env
+*.pid
+*.seed
+*.pid.lock
+build/
+*.tar
+
+# AWS
+*.pem
+.env
+
+# Coverage reports
+htmlcov/
+*.cover
+.coverage
+.coverage.*
+.cache
+
+# pytest
+.pytest_cache/
+
+# Migrations
+migrations/
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Deployment
+*.tar.gz
+*.zip
