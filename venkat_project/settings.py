@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-e(6e4+@&z#50fbvk6sx9eb%+-x(g@2gpvy*sgt%3ztgs1by#)z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'venkat-django-app-g0h7avgsb5gehuex.eastasia-01.azurewebsites.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*', 'venkat-django-app.azurewebsites.net', 'venkat-django-app-g0h7avgsb5gehuex.eastasia-01.azurewebsites.net', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
